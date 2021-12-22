@@ -16,4 +16,7 @@ export class MessagesService {
   findOne(id: number) {
     return this.repo.findOne(id);
   }
+  find() {
+    return this.repo.find();
+  }
 }
