@@ -12,4 +12,8 @@ export class MessagesService {
 
     return this.repo.save(data);
   }
+
+  findOne(id: number) {
+    return this.repo.findOne(id);
+  }
 }
