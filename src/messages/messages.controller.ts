@@ -10,6 +10,8 @@ import {
 import { CreateMessageDto } from './dto/create-message.dto';
 import { MessagesService } from './messages.service';
 import { UpdateMessage } from './dto/update-message.dto';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from 'src/users/user.entity';
 
 @Controller('messages')
 export class MessagesController {
@@ -26,7 +28,8 @@ export class MessagesController {
   }
 
   @Get()
-  findAllMessages() {
+  findAllMessages(@CurrentUser() user: User) {
+    console.log(user);
     return this.messageService.find();
   }
 
