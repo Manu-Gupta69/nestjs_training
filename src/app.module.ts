@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MessagesModule } from './messages/messages.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Message } from './messages/message.entity';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.POSTGRES_USERNAME,
       autoLoadEntities: true,
       synchronize: true,
+      entities: [Message],
     }),
   ],
   controllers: [AppController],
