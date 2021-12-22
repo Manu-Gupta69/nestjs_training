@@ -31,4 +31,14 @@ export class MessagesService {
       return this.repo.save(message);
     } catch (err) {}
   }
+
+  async remove(id: number) {
+    try {
+      const message = await this.findOne(id);
+      if (!message) {
+        //
+      }
+      return this.repo.remove(message);
+    } catch (err) {}
+  }
 }
