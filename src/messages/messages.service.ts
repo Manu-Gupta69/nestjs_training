@@ -16,7 +16,19 @@ export class MessagesService {
   findOne(id: number) {
     return this.repo.findOne(id);
   }
+
   find() {
     return this.repo.find();
+  }
+
+  async update(id: number, attributes: Partial<Message>) {
+    try {
+      const message = await this.findOne(id);
+      if (!message) {
+        //
+      }
+      Object.assign(message, attributes);
+      return this.repo.save(message);
+    } catch (err) {}
   }
 }
