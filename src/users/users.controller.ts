@@ -43,6 +43,15 @@ export class UsersController {
   @Get('/all')
   async getAllUsers() {
     const user = await this.authService.allUsers();
+
     return user;
+  }
+
+  @Post('/logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+    return {
+      message: 'success',
+    };
   }
 }
