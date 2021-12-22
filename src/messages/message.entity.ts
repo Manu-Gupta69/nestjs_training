@@ -7,4 +7,7 @@ export class Message {
 
   @Column()
   content: string;
+
+  @Column()
+  createdAt: string;
 }
