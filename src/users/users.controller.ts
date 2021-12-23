@@ -41,7 +41,7 @@ export class UsersController {
     return user;
   }
 
-  @Get('/all')
+  @Get()
   async getAllUsers() {
     const user = await this.authService.allUsers();
 

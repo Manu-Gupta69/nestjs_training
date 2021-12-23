@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -25,7 +26,6 @@ export class UsersService {
 
       return this.userRepository.save(user);
     } catch (err) {
-      console.log(err);
       throw new InternalServerErrorException('Internal server error');
     }
   }
@@ -42,13 +42,16 @@ export class UsersService {
   }
 
   async findOne(email: string) {
-    const user = await this.userRepository.findOne({ email });
+    try {
+      const user = await this.userRepository.findOne({ email });
+      if (!user) {
+        throw new Error('Invaild credentials');
+      }
 
-    if (!user) {
-      throw new NotFoundException('Invaild credentials');
+      return user;
+    } catch (err) {
+      throw new BadRequestException(`${err}`);
     }
-
-    return user;
   }
 
   async findAll() {
