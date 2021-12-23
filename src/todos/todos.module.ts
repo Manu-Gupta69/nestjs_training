@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { MessagesController } from './messages.controller';
-import { MessagesService } from './messages.service';
+import { TodosController } from './todos.controller';
+import { TodosService } from './todos.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Message } from './message.entity';
+import { Message } from './todo.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
+import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
 import { UsersModule } from 'src/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -19,10 +19,10 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  controllers: [MessagesController],
+  controllers: [TodosController],
   providers: [
-    MessagesService,
+    TodosService,
     { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
 })
-export class MessagesModule {}
+export class todosModule {}

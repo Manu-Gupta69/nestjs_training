@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Message } from './message.entity';
+import { Message } from './todo.entity';
 
 @Injectable()
-export class MessagesService {
+export class TodosService {
   constructor(@InjectRepository(Message) private repo: Repository<Message>) {}
 
   create(content: string) {

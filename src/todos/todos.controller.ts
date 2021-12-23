@@ -8,17 +8,17 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { MessagesService } from './messages.service';
-import { UpdateMessage } from './dto/update-message.dto';
-import { CurrentUser } from './decorators/current-user.decorator';
+import { CreateMessageDto } from './dto/create-todo.dto';
+import { TodosService } from './todos.service';
+import { UpdateMessage } from './dto/update-todo.dto';
+import { CurrentUser } from '../decorators/current-user.decorator';
 import { User } from 'src/users/user.entity';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('messages')
 @UseGuards(AuthGuard)
-export class MessagesController {
-  constructor(private messageService: MessagesService) {}
+export class TodosController {
+  constructor(private messageService: TodosService) {}
 
   @Post('/create')
   createMessage(@Body() body: CreateMessageDto) {

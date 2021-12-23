@@ -3,20 +3,21 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+import { AssignUserDto } from 'src/users/dto/assign-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UsersService) {}
 
-  async signUp(name: string, email: string, password: string) {
+  async signUp(userDto: AssignUserDto) {
     try {
-      const existingUser = await this.userService.findByEmail(email);
+      const existingUser = await this.userService.findByEmail(userDto.email);
 
       if (existingUser.length) throw new Error('Email already exist');
 
-      const user = await this.userService.create(name, email, password);
+      const user = await this.userService.create(userDto);
 
       delete user.password;
       return user;
@@ -43,6 +44,7 @@ export class AuthService {
       const user = await this.userService.findAll();
 
       if (!user.length) throw new Error('No Users Found');
+      return user;
     } catch (err) {
       throw new NotFoundException(`${err}`);
     }
