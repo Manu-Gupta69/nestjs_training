@@ -6,8 +6,6 @@ import { User } from './user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CurrentUserInterceptor } from '../messages/interceptors/current-user.interceptor';
 
 @Module({
   imports: [

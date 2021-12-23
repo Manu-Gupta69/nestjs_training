@@ -17,13 +17,14 @@ export class CurrentUserInterceptor implements NestInterceptor {
   async intercept(context: ExecutionContext, handler: CallHandler) {
     const request = context.switchToHttp().getRequest();
     const cookie = request.cookies['jwt'];
-
     const { id } = this.jwtService.verify(cookie);
+
     if (id) {
       const user = await this.usersService.findById(id);
       delete user.password;
       request.currentUser = user;
     }
+
     return handler.handle();
   }
 }

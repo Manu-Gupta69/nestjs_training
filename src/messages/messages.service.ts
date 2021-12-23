@@ -19,15 +19,13 @@ export class MessagesService {
   }
 
   async findOne(id: number) {
-    try {
-      const message = await this.repo.findOne(id);
-      if (!message) {
-        throw new NotFoundException('message not found');
-      }
-      return message;
-    } catch (err) {
-      throw new InternalServerErrorException(err);
+    const message = await this.repo.findOne(id);
+
+    if (!message) {
+      throw new NotFoundException('message not found');
     }
+
+    return message;
   }
 
   find() {
@@ -35,27 +33,23 @@ export class MessagesService {
   }
 
   async update(id: number, attributes: Partial<Message>) {
-    try {
-      const message = await this.findOne(id);
-      if (!message) {
-        throw new NotFoundException('message not found');
-      }
-      Object.assign(message, attributes);
-      return this.repo.save(message);
-    } catch (err) {
-      throw new InternalServerErrorException(err);
+    const message = await this.findOne(id);
+
+    if (!message) {
+      throw new NotFoundException('message not found');
     }
+
+    Object.assign(message, attributes);
+    return this.repo.save(message);
   }
 
   async remove(id: number) {
-    try {
-      const message = await this.findOne(id);
-      if (!message) {
-        throw new NotFoundException('message not found');
-      }
-      return this.repo.remove(message);
-    } catch (err) {
-      throw new InternalServerErrorException(err);
+    const message = await this.findOne(id);
+
+    if (!message) {
+      throw new NotFoundException('message not found');
     }
+
+    return this.repo.remove(message);
   }
 }

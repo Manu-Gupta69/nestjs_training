@@ -24,6 +24,7 @@ export class UsersController {
       body.password,
     );
     const jwtToken = this.jwtService.sign({ id: user.id });
+
     response.cookie('jwt', jwtToken, { httpOnly: true });
     return user;
   }
