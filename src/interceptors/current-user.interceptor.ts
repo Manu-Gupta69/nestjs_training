@@ -23,7 +23,8 @@ export class CurrentUserInterceptor implements NestInterceptor {
         const { id } = await this.jwtService.verifyAsync(cookie);
         const user = await this.usersService.findById(id);
 
-        delete user.password;
+        if (user) delete user.password;
+
         request.currentUser = user;
       }
 

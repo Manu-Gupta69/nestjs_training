@@ -6,16 +6,17 @@ import {
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { AssignUserDto } from 'src/users/dto/assign-user.dto';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(private userService: UsersService) {}
 
-  async signUp(userDto: AssignUserDto) {
+  async signUp(userDto: AssignUserDto): Promise<User> {
     try {
       const existingUser = await this.userService.findByEmail(userDto.email);
 
-      if (existingUser.length) throw new Error('Email already exist');
+      if (existingUser) throw new Error('Email already exist');
 
       const user = await this.userService.create(userDto);
 
@@ -26,7 +27,7 @@ export class AuthService {
     }
   }
 
-  async logIn(email: string, password: string) {
+  async logIn(email: string, password: string): Promise<User> {
     try {
       const user = await this.userService.findOne(email);
       if (!bcrypt.compare(user.password, password)) {

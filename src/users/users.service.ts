@@ -16,29 +16,41 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async create(userDto: AssignUserDto) {
+  async create(userDto: AssignUserDto): Promise<User> {
     try {
       userDto.password = await brcypt.hash(userDto.password, 12);
       const user = this.userRepository.create(userDto);
 
       return this.userRepository.save(user);
     } catch (err) {
-      throw new InternalServerErrorException('Internal server error');
+      throw new BadRequestException(`${err}`);
     }
   }
 
-  async findByEmail(email: string) {
-    const user = await this.userRepository.find({ email });
+  async findByEmail(email: string): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne({ email });
 
-    return user;
+      if (!user) return null;
+
+      return user;
+    } catch (err) {
+      throw new BadRequestException(`${err}`);
+    }
   }
-  async findById(id: number) {
-    const user = await this.userRepository.findOne(id);
+  async findById(id: number): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne(id);
 
-    return user;
+      if (!user) return null;
+
+      return user;
+    } catch (err) {
+      throw new BadRequestException(`${err}`);
+    }
   }
 
-  async findOne(email: string) {
+  async findOne(email: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne({ email });
       if (!user) {
@@ -51,7 +63,7 @@ export class UsersService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<object[]> {
     try {
       const user = await this.userRepository.find();
 
